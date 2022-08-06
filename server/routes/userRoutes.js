@@ -5,9 +5,10 @@ const router = express.Router();
 
 router.post('/login', async (req, res) => {
   try {
+    console.log(req.body);
     const result = await User.findOne({
       email: req.body.email,
-      pasword: req.body.password,
+      password: req.body.password,
     });
 
     if (result) {

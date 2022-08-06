@@ -1,10 +1,23 @@
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../resources/authentication.css';
+import axios from 'axios';
+
 function Login() {
-  const onFinish = (values) => {
-    console.log('Success:', values);
+  const navigate = useNavigate();
+  const onFinish = async (values) => {
+    try {
+      const response = await axios.post('/api/users/login', values);
+      localStorage.setItem(
+        'pmm-user',
+        JSON.stringify({ ...response.data, password: '' })
+      );
+      message.success('Login successfull!');
+      navigate('/');
+    } catch (error) {
+      message.error('Something went wrong!');
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -22,14 +35,11 @@ function Login() {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
           >
-            <Form.Item label="Name" name="name">
-              <Input />
-            </Form.Item>
             <Form.Item label="Email" name="email">
               <Input />
             </Form.Item>
             <Form.Item label="Password" name="password">
-              <Input />
+              <Input type="password" />
             </Form.Item>
             <div className="d-flex justify-content-between align-items-center">
               <Link to="/register">

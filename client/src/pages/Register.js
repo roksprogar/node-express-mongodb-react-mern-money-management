@@ -1,10 +1,17 @@
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../resources/authentication.css';
+import axios from 'axios';
+
 function Register() {
-  const onFinish = (values) => {
-    console.log('Success:', values);
+  const onFinish = async (values) => {
+    try {
+      axios.post('/api/users/register', values);
+      message.success('Registration Successfull!');
+    } catch (error) {
+      message.error('Something went wrong!');
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -40,7 +47,7 @@ function Register() {
               <Input />
             </Form.Item>
             <Form.Item label="Password" name="password">
-              <Input />
+              <Input type="password" />
             </Form.Item>
             <div className="d-flex justify-content-between align-items-center">
               <Link to="/login">Already registered? Click here to log in.</Link>

@@ -6,6 +6,7 @@ import Spinner from './Spinner';
 function AddEditTransaction({
   showAddEditTransactionModal,
   setShowAddEditTransactionModal,
+  getTransactions,
 }) {
   const [loading, setLoading] = useState(false);
 
@@ -21,6 +22,7 @@ function AddEditTransaction({
         ...values,
         userid: user._id,
       });
+      getTransactions();
       setLoading(false);
       message.success('Transaction added!');
       setShowAddEditTransactionModal(false);

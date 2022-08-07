@@ -1,5 +1,6 @@
 const express = require('express');
 const Transaction = require('../models/Transaction');
+const moment = require('moment');
 
 const router = express.Router();
 
@@ -15,7 +16,23 @@ router.post('/add-transaction', async (req, res) => {
 
 router.post('/get-all-transactions', async (req, res) => {
   try {
-    const transactions = await Transaction.find({ userid: req.body.userid });
+    console.log(req.body);
+    const { frequency, selectedRange } = req.body;
+    const transactions = await Transaction.find({
+      userid: req.body.userid,
+      ...(frequency !== 'custom'
+        ? {
+            date: {
+              $gt: moment().subtract(Number(req.body.frequency), 'd').toDate(),
+            },
+          }
+        : {
+            date: {
+              $gte: selectedRange[0],
+              $lte: selectedRange[1],
+            },
+          }),
+    });
     res.send(transactions);
   } catch (error) {
     res.status(500).json(error);

@@ -68,7 +68,7 @@ function Home() {
 
       <div className="table-analytics">
         <div className="table">
-          <Table columns={columns} dataSource={transactionsData} />
+          <Table columns={columns} dataSource={transactionsData} rowKey="_id" />
         </div>
       </div>
 

@@ -1,13 +1,20 @@
 import { Button, Form, Input, message } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../resources/authentication.css';
 import axios from 'axios';
 import Spinner from '../components/Spinner';
 
 function Login() {
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem('pmm-user')) {
+      navigate('/');
+    }
+  }, [navigate]);
 
   const onFinish = async (values) => {
     try {

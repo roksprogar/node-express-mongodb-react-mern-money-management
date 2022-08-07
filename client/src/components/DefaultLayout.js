@@ -13,14 +13,14 @@ function DefaultLayout(props) {
         {
           key: '1',
           label: (
-            <li
+            <div
               onClick={() => {
                 localStorage.removeItem('pmm-user');
                 navigate('/login');
               }}
             >
               Logout
-            </li>
+            </div>
           ),
         },
       ]}

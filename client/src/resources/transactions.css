@@ -41,3 +41,9 @@
 .inactive-icon {
   color: grey;
 }
+
+@media screen and (max-width: 600px) {
+  .filter {
+    overflow-x: scroll;
+  }
+}

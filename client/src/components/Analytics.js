@@ -60,12 +60,12 @@ function Analytics({ transactions }) {
                 className="mx-5"
                 type="circle"
                 percent={totalIncomeTransactionsPercentage.toFixed(0)}
-                strokeColor="green"
+                strokeColor="#5dd64f"
               />
               <Progress
                 type="circle"
                 percent={totalExpenseTransactionsPercentage.toFixed(0)}
-                strokeColor="red"
+                strokeColor="#e5572f"
               />
             </div>
           </div>
@@ -81,18 +81,19 @@ function Analytics({ transactions }) {
                 className="mx-5"
                 type="circle"
                 percent={totalIncomeTurnoverPercentage.toFixed(0)}
-                strokeColor="green"
+                strokeColor="#5dd64f"
               />
               <Progress
                 type="circle"
                 percent={totalExpenseTurnoverPercentage.toFixed(0)}
-                strokeColor="red"
+                strokeColor="#e5572f"
               />
             </div>
           </div>
         </div>
       </div>
-      <div className="row mt-5">
+      <hr />
+      <div className="row">
         <div className="col-md-6">
           <div className="category-analysis">
             <h4>Income - Category breakdown</h4>
@@ -105,7 +106,7 @@ function Analytics({ transactions }) {
                 amount > 0 && (
                   <div className="category-card">
                     <h5>{category}</h5>
-                    <Progress percent={percent} strokeColor="green" />
+                    <Progress percent={percent} strokeColor="#5dd64f" />
                   </div>
                 )
               );
@@ -124,7 +125,7 @@ function Analytics({ transactions }) {
                 amount > 0 && (
                   <div className="category-card">
                     <h5>{category}</h5>
-                    <Progress percent={percent} strokeColor="red" />
+                    <Progress percent={percent} strokeColor="#e5572f" />
                   </div>
                 )
               );

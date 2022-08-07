@@ -34,6 +34,18 @@ function Analytics({ transactions }) {
   const totalExpenseTurnoverPercentage =
     (totalExpenseTurnover / totalTurnover) * 100;
 
+  const categories = [
+    'salary',
+    'freelance',
+    'food',
+    'entertainment',
+    'investment',
+    'travel',
+    'education',
+    'medical',
+    'tax',
+  ];
+
   return (
     <div className="analytics">
       <div className="row">
@@ -77,6 +89,27 @@ function Analytics({ transactions }) {
                 strokeColor="red"
               />
             </div>
+          </div>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-6">
+          <div className="income-category-analysis">
+            <h3>Income - Category breakdown</h3>
+            {categories.map((category) => {
+              let amount = transactions
+                .filter((t) => t.type == 'income' && t.category === category)
+                .reduce((s, t) => s + t.amount, 0);
+              let percent = ((amount / totalIncomeTurnover) * 100).toFixed(0);
+              return (
+                amount > 0 && (
+                  <div className="category-card">
+                    <h5>{category}</h5>
+                    <Progress percent={percent} strokeColor="green" />
+                  </div>
+                )
+              );
+            })}
           </div>
         </div>
       </div>

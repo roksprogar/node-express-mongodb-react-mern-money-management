@@ -14,6 +14,18 @@ router.post('/add-transaction', async (req, res) => {
   }
 });
 
+router.post('/edit-transaction', async (req, res) => {
+  try {
+    await Transaction.findByIdAndUpdate(
+      { _id: req.body.transactionId },
+      req.body.payload
+    );
+    res.send('Transaction Updated Successfully!');
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 router.post('/get-all-transactions', async (req, res) => {
   try {
     const { frequency, selectedRange, type } = req.body;

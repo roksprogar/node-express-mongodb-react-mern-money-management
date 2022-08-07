@@ -98,7 +98,7 @@ function Analytics({ transactions }) {
             <h4>Income - Category breakdown</h4>
             {categories.map((category) => {
               let amount = transactions
-                .filter((t) => t.type == 'income' && t.category === category)
+                .filter((t) => t.type === 'income' && t.category === category)
                 .reduce((s, t) => s + t.amount, 0);
               let percent = ((amount / totalIncomeTurnover) * 100).toFixed(0);
               return (
@@ -117,7 +117,7 @@ function Analytics({ transactions }) {
             <h4>Expense - Category breakdown</h4>
             {categories.map((category) => {
               let amount = transactions
-                .filter((t) => t.type == 'expense' && t.category === category)
+                .filter((t) => t.type === 'expense' && t.category === category)
                 .reduce((s, t) => s + t.amount, 0);
               let percent = ((amount / totalExpenseTurnover) * 100).toFixed(0);
               return (

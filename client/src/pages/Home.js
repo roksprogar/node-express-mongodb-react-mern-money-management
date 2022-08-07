@@ -7,14 +7,21 @@ import DefaultLayout from '../components/DefaultLayout';
 import Spinner from '../components/Spinner';
 import Analytics from '../components/Analytics';
 import '../resources/transactions.css';
-import { AreaChartOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import {
+  EditOutlined,
+  DeleteOutlined,
+  AreaChartOutlined,
+  UnorderedListOutlined,
+} from '@ant-design/icons';
 const { RangePicker } = DatePicker;
 
 function Home() {
   const [loading, setLoading] = useState(false);
   const [transactions, setTransactions] = useState([]);
-  const [showAddEditTransactionModal, setShowAddEditTransactionModal] =
+  const [selectedTransactionForEdit, setSelectedTransactionForEdit] =
     useState(false);
+  const [showAddEditTransactionModal, setShowAddEditTransactionModal] =
+    useState(null);
   const [frequency, setFrequency] = useState('7');
   const [selectedRange, setSelectedRange] = useState([]);
   const [type, setType] = useState('all');
@@ -66,6 +73,23 @@ function Home() {
     {
       title: 'Reference',
       dataIndex: 'reference',
+    },
+    {
+      title: 'Actions',
+      dataIndex: 'actions',
+      render: (text, record) => {
+        return (
+          <div>
+            <EditOutlined
+              onClick={() => {
+                setSelectedTransactionForEdit(record);
+                setShowAddEditTransactionModal(true);
+              }}
+            />
+            <DeleteOutlined className="mx-3" />
+          </div>
+        );
+      },
     },
   ];
 
@@ -139,6 +163,8 @@ function Home() {
         <AddEditTransaction
           showAddEditTransactionModal={showAddEditTransactionModal}
           setShowAddEditTransactionModal={setShowAddEditTransactionModal}
+          selectedTransactionForEdit={selectedTransactionForEdit}
+          setSelectedTransactionForEdit={setSelectedTransactionForEdit}
           getTransactions={getTransactions}
         />
       )}

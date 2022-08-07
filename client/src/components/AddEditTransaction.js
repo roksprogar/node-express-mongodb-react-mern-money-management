@@ -6,6 +6,8 @@ import Spinner from './Spinner';
 function AddEditTransaction({
   showAddEditTransactionModal,
   setShowAddEditTransactionModal,
+  selectedTransactionForEdit,
+  setSelectedTransactionForEdit,
   getTransactions,
 }) {
   const [loading, setLoading] = useState(false);
@@ -18,14 +20,27 @@ function AddEditTransaction({
     try {
       setLoading(true);
       const user = JSON.parse(localStorage.getItem('pmm-user'));
-      axios.post('/api/transactions/add-transaction', {
-        ...values,
-        userid: user._id,
-      });
-      getTransactions();
-      setLoading(false);
-      message.success('Transaction added!');
+      if (selectedTransactionForEdit) {
+        await axios.post('/api/transactions/edit-transaction', {
+          payload: {
+            ...values,
+            userid: user._id,
+          },
+          transactionId: selectedTransactionForEdit._id,
+        });
+        getTransactions();
+        message.success('Transaction updated!');
+      } else {
+        await axios.post('/api/transactions/add-transaction', {
+          ...values,
+          userid: user._id,
+        });
+        getTransactions();
+        message.success('Transaction added!');
+      }
       setShowAddEditTransactionModal(false);
+      setSelectedTransactionForEdit(null);
+      setLoading(false);
     } catch (error) {
       setLoading(false);
       message.error('Something went wrong!');
@@ -33,7 +48,9 @@ function AddEditTransaction({
   };
   return (
     <Modal
-      title="Add transaction"
+      title={
+        selectedTransactionForEdit ? 'Edit transaction' : 'Add transaction'
+      }
       visible={showAddEditTransactionModal}
       onCancel={handleModalCancel}
       footer={false}
@@ -43,6 +60,7 @@ function AddEditTransaction({
         layout="vertical"
         className="transaction-form"
         onFinish={handleFormSubmit}
+        initialValues={selectedTransactionForEdit}
       >
         <Form.Item label="Amount" name="amount">
           <Input type="text"></Input>

@@ -5,13 +5,14 @@ import React, { useEffect, useState } from 'react';
 import AddEditTransaction from '../components/AddEditTransaction';
 import DefaultLayout from '../components/DefaultLayout';
 import Spinner from '../components/Spinner';
+import Analytics from '../components/Analytics';
 import '../resources/transactions.css';
 import { AreaChartOutlined, UnorderedListOutlined } from '@ant-design/icons';
 const { RangePicker } = DatePicker;
 
 function Home() {
   const [loading, setLoading] = useState(false);
-  const [transactionsData, setTransactionsData] = useState([]);
+  const [transactions, setTransactions] = useState([]);
   const [showAddEditTransactionModal, setShowAddEditTransactionModal] =
     useState(false);
   const [frequency, setFrequency] = useState('7');
@@ -32,7 +33,7 @@ function Home() {
           type: type,
         }
       );
-      setTransactionsData(response.data);
+      setTransactions(response.data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -125,9 +126,13 @@ function Home() {
       </div>
 
       <div className="table-analytics">
-        <div className="table">
-          <Table columns={columns} dataSource={transactionsData} rowKey="_id" />
-        </div>
+        {viewType === 'table' ? (
+          <div className="table">
+            <Table columns={columns} dataSource={transactions} rowKey="_id" />
+          </div>
+        ) : (
+          <Analytics transactions={transactions} />
+        )}
       </div>
 
       {showAddEditTransactionModal && (

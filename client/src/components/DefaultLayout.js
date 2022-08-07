@@ -1,4 +1,4 @@
-import { Button, Dropdown, Menu } from 'antd';
+import { Dropdown, Menu } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../resources/default-layout.css';

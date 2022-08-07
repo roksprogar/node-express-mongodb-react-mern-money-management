@@ -6,6 +6,7 @@ import AddEditTransaction from '../components/AddEditTransaction';
 import DefaultLayout from '../components/DefaultLayout';
 import Spinner from '../components/Spinner';
 import '../resources/transactions.css';
+import { AreaChartOutlined, UnorderedListOutlined } from '@ant-design/icons';
 const { RangePicker } = DatePicker;
 
 function Home() {
@@ -16,6 +17,7 @@ function Home() {
   const [frequency, setFrequency] = useState('7');
   const [selectedRange, setSelectedRange] = useState([]);
   const [type, setType] = useState('all');
+  const [viewType, setViewType] = useState('table');
 
   const getTransactions = async () => {
     try {
@@ -98,7 +100,21 @@ function Home() {
             </Select>
           </div>
         </div>
-        <div>
+        <div className="d-flex">
+          <div className="view-switch mx-5">
+            <UnorderedListOutlined
+              className={`${
+                viewType === 'table' ? 'active-icon' : 'inactive-icon'
+              } mr-3`}
+              onClick={() => setViewType('table')}
+            />
+            <AreaChartOutlined
+              className={`${
+                viewType !== 'table' ? 'active-icon' : 'inactive-icon'
+              }`}
+              onClick={() => setViewType('analytics')}
+            />
+          </div>
           <button
             className="primary"
             onClick={() => setShowAddEditTransactionModal(true)}
